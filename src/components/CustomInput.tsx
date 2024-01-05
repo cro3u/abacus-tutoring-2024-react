@@ -1,27 +1,37 @@
 import { useState, ChangeEvent } from 'react'
 
 export type CustomInputProps = {
-  type?: string
   label?: string
-  initialValue?: string | number
+  onInputChange: (value: string | number) => void
 }
 
 export default function CustomInput({
-  type = 'text',
   label,
+  onInputChange,
 }: CustomInputProps) {
   const [inputValue, setInputValue] = useState<string | number>('')
-  const handelInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    setInputValue(type === 'number' ? +value : value)
+
+    // let result
+    // if (isNaN(+value)) {
+    //   result = value
+    // } else {
+    //   result = +value
+    // }
+
+    const isNumeric = isNaN(+value) //true
+    const result = isNumeric ? value : +value
+
+    setInputValue(result)
+    onInputChange(result)
   }
   return (
     <div className="input">
       <div className="input__wrap">
         {label === undefined ? '' : <label>{label}</label>}
-        <input type={type} value={inputValue} onChange={handelInputChange} />
+        <input onChange={handleInputValueChange} value={inputValue} />
       </div>
-      {inputValue ? <p className="input__type">{typeof inputValue}</p> : null}
     </div>
   )
 }
