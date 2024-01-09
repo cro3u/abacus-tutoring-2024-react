@@ -34,24 +34,28 @@ function App() {
   //
 
   return (
-    <>
-      <input value={enteredNum} onChange={handleAddComma} />
-      {/* ==================== */}
-      <div className="flex flex-col items-start">
+    <div className="flex flex-col gap-5">
+      <div>
+        <input value={enteredNum} onChange={handleAddComma} />
+      </div>
+      <div>
+        <CustomInput
+          label="상위페이지에서 하위페이지로 함수 전달"
+          handleAlertBtn={handleAlertBtn}
+        />
         <CustomInput
           label="input에 입력된 type 알아보기"
           onInputChange={handleInputValueChange}
-          handleAlertBtn={handleAlertBtn}
         />
         <p className="flex">
           type: {inputValue ? <span>{typeof inputValue}</span> : ''}
         </p>
       </div>
 
-      <div className="mt-10">
+      <div>
         <XYLocation />
       </div>
-    </>
+    </div>
   )
 }
 

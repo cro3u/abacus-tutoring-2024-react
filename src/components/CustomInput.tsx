@@ -2,10 +2,10 @@ import { useState, ChangeEvent } from 'react'
 
 export type CustomInputProps = {
   label?: string
-  onInputChange: (value: string | number) => void
-  handleAlertBtn: () => void
+  onInputChange?: (value: string | number) => void
+  handleAlertBtn?: () => void
 }
-// const AlertButton = ({ handleAlertBtn }: { handleAlertBtn: () => void }) => {
+// const AlertButton = ({ handleAlertBtn }: CustomInputProps) => {
 //   return (
 //     <button type="button" onClick={handleAlertBtn}>
 //       button
@@ -32,7 +32,9 @@ export default function CustomInput({
     const result = isNumeric ? value : +value
 
     setInputValue(result)
-    onInputChange(result)
+    if (onInputChange) {
+      onInputChange(result)
+    }
   }
   return (
     <div className="input">
@@ -40,8 +42,8 @@ export default function CustomInput({
         {label === undefined ? '' : <label>{label}</label>}
         <input onChange={handleInputValueChange} value={inputValue} />
       </div>
-      <button onClick={handleAlertBtn}>button</button>
-      {/* <AlertButton handleAlertBtn={handleAlertBtn} /> */}
+      {handleAlertBtn && <button onClick={handleAlertBtn}>button</button>}
+      {/* {handleAlertBtn && <AlertButton handleAlertBtn={handleAlertBtn} />} */}
     </div>
   )
 }
