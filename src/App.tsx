@@ -1,42 +1,43 @@
-import { useState, useEffect } from 'react'
-import './App.scss'
-import CustomInput from './components/CustomInput'
-import { MoveMouse } from './composables/MoveMouse'
-import { useAddComma } from './plugin/addDot'
+import { useState, useEffect } from 'react';
+import './App.scss';
+import CustomInput from './components/CustomInput';
+import MoveMouse from './composables/MoveMouse';
+import AddDot from './plugin/addDot';
 
 function XYLocation() {
-  const { xy, handleMouseMove } = MoveMouse()
+  const { xy, handleMouseMove } = MoveMouse();
 
   useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove)
-  }, [handleMouseMove])
+    window.addEventListener('mousemove', handleMouseMove);
+  }, [handleMouseMove]);
 
   return (
     <div>
       <p>X: {xy.x}</p>
       <p>Y: {xy.y}</p>
     </div>
-  )
+  );
 }
 
 const handleAlertBtn = () => {
-  alert('안녕하세용')
-}
+  // eslint-disable-next-line no-alert
+  alert('안녕하세용');
+};
 
 function App() {
-  const [inputValue, setInputValue] = useState<string | number>('')
+  const [inputValue, setInputValue] = useState<string | number>('');
 
   const handleInputValueChange = (value: string | number) => {
-    setInputValue(value)
-  }
+    setInputValue(value);
+  };
   //
-  const { enteredNum, handleAddComma } = useAddComma()
+  const { enteredNum, handleAddDot } = AddDot();
   //
 
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <input value={enteredNum} onChange={handleAddComma} />
+        <input value={enteredNum} onChange={handleAddDot} />
       </div>
       <div>
         <CustomInput
@@ -56,7 +57,7 @@ function App() {
         <XYLocation />
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
