@@ -1,49 +1,39 @@
-import { useState, ChangeEvent } from 'react'
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/require-default-props */
+import { useState, ChangeEvent } from 'react';
 
 export type CustomInputProps = {
   label?: string
   onInputChange?: (value: string | number) => void
   handleAlertBtn?: () => void
 }
-// const AlertButton = ({ handleAlertBtn }: CustomInputProps) => {
-//   return (
-//     <button type="button" onClick={handleAlertBtn}>
-//       button
-//     </button>
-//   )
-// }
+
 export default function CustomInput({
   label,
   onInputChange,
   handleAlertBtn,
 }: CustomInputProps) {
-  const [inputValue, setInputValue] = useState<string | number>('')
+  const [inputValue, setInputValue] = useState<string | number>('');
   const handleInputValueChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
+    const { value } = e.target;
 
-    // let result
-    // if (isNaN(+value)) {
-    //   result = value
-    // } else {
-    //   result = +value
-    // }
+    const isNumeric = Number.isNaN(+value);
+    // isNaN = type boolean => true = value: string, false = value: number
 
-    const isNumeric = isNaN(+value) //true
-    const result = isNumeric ? value : +value
+    const result = isNumeric ? value : +value;
 
-    setInputValue(result)
+    setInputValue(result);
     if (onInputChange) {
-      onInputChange(result)
+      onInputChange(result);
     }
-  }
+  };
   return (
     <div className="input">
       <div className="input__wrap">
         {label === undefined ? '' : <label>{label}</label>}
         <input onChange={handleInputValueChange} value={inputValue} />
       </div>
-      {handleAlertBtn && <button onClick={handleAlertBtn}>button</button>}
-      {/* {handleAlertBtn && <AlertButton handleAlertBtn={handleAlertBtn} />} */}
+      {handleAlertBtn && <button type="button" onClick={handleAlertBtn}>button</button>}
     </div>
-  )
+  );
 }
